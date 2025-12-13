@@ -104,24 +104,75 @@ crawl_metadata (crawl_id, start_url, max_depth, pages_crawled, start_time, end_t
 
 ---
 
-## 🔄 Phase 3: Indexer (NOT STARTED)
+## ✅ Phase 3: Indexer (COMPLETE)
 
-### To Be Implemented:
-- `Tokenizer.java` - Split text into words
-- `StopWordFilter.java` - Remove common words using stopwords.txt
-- `Stemmer.java` - Porter stemmer for word normalization
-- `InvertedIndex.java` - In-memory index structure
-- `Indexer.java` - Main indexing orchestrator
-- `IndexDAO.java` - Database operations for inverted index
+### Components Implemented:
+- **[Tokenizer.java](src/main/java/com/searchengine/indexer/Tokenizer.java)** - Text tokenization
+  - Split text into words using regex
+  - Filter by word length (2-50 characters)
+  - Exclude pure numbers
+  - Position tracking for phrase queries
+  - TokenPosition class for positional indexing
 
-### Tasks:
-- [ ] Text tokenization
-- [ ] Stop word removal
-- [ ] Word stemming
-- [ ] Build inverted index (Map<String, List<PostingEntry>>)
-- [ ] Save index to database (words and word_positions tables)
-- [ ] Update word counts
-- [ ] Handle incremental indexing
+- **[StopWordFilter.java](src/main/java/com/searchengine/indexer/StopWordFilter.java)** - Stop word removal
+  - Load stop words from stopwords.txt
+  - Filter stop words from token lists
+  - Support for TokenPosition filtering
+  - Fallback to default stop words if file not found
+  - 174 English stop words loaded
+
+- **[Stemmer.java](src/main/java/com/searchengine/indexer/Stemmer.java)** - Porter Stemmer implementation
+  - Full Porter Stemming Algorithm implementation
+  - Reduces words to root form (running → run, studies → studi)
+  - 5-step stemming process
+  - Consonant/vowel pattern analysis
+  - Suffix removal and normalization
+
+- **[InvertedIndex.java](src/main/java/com/searchengine/indexer/InvertedIndex.java)** - In-memory inverted index
+  - Thread-safe ConcurrentHashMap-based index
+  - Map<String, List<PostingEntry>> structure
+  - PostingEntry with pageId, frequency, and positions
+  - Search operations: single word, AND, OR queries
+  - Statistics tracking (unique words, total occurrences)
+  - Document frequency calculation
+
+- **[IndexDAO.java](src/main/java/com/searchengine/database/IndexDAO.java)** - Database persistence
+  - Save words to words table
+  - Save word positions to word_positions table
+  - Get/create word IDs
+  - Query pages by word
+  - Delete index for specific pages
+  - Transaction support for batch operations
+  - Statistics queries
+
+- **[Indexer.java](src/main/java/com/searchengine/indexer/Indexer.java)** - Main indexing orchestrator
+  - Index single pages or all pages
+  - Combine title and content for indexing
+  - Progress listener interface
+  - Re-index capability
+  - Statistics tracking
+  - Word count updates in database
+
+### Features:
+- ✅ Text tokenization with position tracking
+- ✅ Stop word filtering (174 words)
+- ✅ Porter stemming for normalization
+- ✅ In-memory inverted index
+- ✅ Database persistence
+- ✅ Single word search
+- ✅ AND/OR query support
+- ✅ Term frequency tracking
+- ✅ Position-based indexing
+- ✅ Re-indexing support
+- ✅ Progress monitoring
+
+### Demo Application:
+- **[IndexerDemo.java](src/main/java/com/searchengine/IndexerDemo.java)** - Test indexing
+  - Index all crawled pages
+  - Display indexing statistics
+  - Demonstrate search functionality
+  - Show single word, AND, and OR searches
+  - Display term frequencies and positions
 
 ---
 
@@ -230,25 +281,18 @@ webCrawler.startCrawl("https://example.com", 2);
 
 ## Next Steps
 
-1. **Implement Phase 3 (Indexer):**
-   - Start with Tokenizer
-   - Implement StopWordFilter using stopwords.txt
-   - Add Porter Stemmer
-   - Build inverted index
-   - Save to database
-
-2. **Implement Phase 4 (Search):**
+1. **Implement Phase 4 (Search):**
    - Query processing
    - TF-IDF ranking
    - Result formatting
 
-3. **Implement Phase 5 (GUI):**
+2. **Implement Phase 5 (GUI):**
    - JavaFX main window
    - Crawler panel with controls
    - Search panel with results
    - Wire everything together
 
-4. **Phase 6 (Testing & Polish):**
+3. **Phase 6 (Testing & Polish):**
    - Comprehensive testing
    - Error handling
    - Documentation
@@ -260,7 +304,9 @@ webCrawler.startCrawl("https://example.com", 2);
 
 ```
 src/main/java/com/searchengine/
-├── Main.java                          ✅ Application entry point
+├── Main.java                          ✅ Application entry point (Phase 5 placeholder)
+├── CrawlerDemo.java                   ✅ Crawler demo application
+├── IndexerDemo.java                   ✅ Indexer demo application
 ├── crawler/
 │   ├── CrawlerTask.java              ✅ Single page crawl task
 │   ├── RobotsTxtParser.java          ✅ robots.txt handler
@@ -271,18 +317,25 @@ src/main/java/com/searchengine/
 │   ├── CrawlMetadata.java            ✅ Crawl session model
 │   ├── CrawlMetadataDAO.java         ✅ Crawl metadata operations
 │   ├── DatabaseManager.java          ✅ Connection pool & schema
+│   ├── IndexDAO.java                 ✅ Inverted index persistence
 │   ├── Page.java                     ✅ Page model
 │   └── PageDAO.java                  ✅ Page operations
-├── indexer/                          ⏳ To be implemented
-├── search/                           ⏳ To be implemented
-├── gui/                              ⏳ To be implemented
+├── indexer/
+│   ├── InvertedIndex.java            ✅ In-memory inverted index
+│   ├── Indexer.java                  ✅ Main indexing orchestrator
+│   ├── Stemmer.java                  ✅ Porter stemmer
+│   ├── StopWordFilter.java           ✅ Stop word removal
+│   └── Tokenizer.java                ✅ Text tokenization
+├── search/                           ⏳ To be implemented (Phase 4)
+├── gui/                              ⏳ To be implemented (Phase 5)
 └── utils/
     ├── ConfigLoader.java             ✅ Configuration loader
     ├── URLNormalizer.java            ✅ URL normalization
     └── URLValidator.java             ✅ URL validation
 
 src/test/java/com/searchengine/
-└── CrawlerTest.java                  ✅ Unit tests
+├── CrawlerTest.java                  ✅ Crawler unit tests
+└── QuickTest.java                    ✅ Comprehensive unit tests (8/8 passing)
 ```
 
 ---
@@ -301,7 +354,24 @@ src/test/java/com/searchengine/
 
 ## Summary
 
-**Completed:** Phase 1 (Database) + Phase 2 (Crawler)
-**Remaining:** Phase 3 (Indexer) + Phase 4 (Search) + Phase 5 (GUI) + Phase 6 (Polish)
+**Completed:**
+- ✅ Phase 1 (Database Layer) - 100%
+- ✅ Phase 2 (Web Crawler) - 100%
+- ✅ Phase 3 (Indexer) - 100%
 
-**Current Status:** You have a fully functional web crawler that can crawl websites, respect robots.txt, save pages to a database, and track crawl sessions. The foundation is solid and ready for the indexer implementation!
+**Remaining:**
+- ⏳ Phase 4 (Search Engine) - 0%
+- ⏳ Phase 5 (GUI) - 0%
+- ⏳ Phase 6 (Testing & Polish) - 0%
+
+**Current Status:** You have a fully functional web crawler and indexer! The system can:
+1. Crawl websites with multithreading and depth limiting
+2. Respect robots.txt and apply politeness delays
+3. Save crawled pages to SQLite database
+4. Tokenize and normalize text content
+5. Filter stop words and apply Porter stemming
+6. Build an inverted index with position tracking
+7. Persist the index to database
+8. Perform single-word, AND, and OR searches
+
+**Next Step:** Implement Phase 4 (Search Engine) with TF-IDF ranking and result formatting!
