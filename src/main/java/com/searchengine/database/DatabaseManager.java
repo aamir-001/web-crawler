@@ -207,6 +207,7 @@ public class DatabaseManager {
             }
         }
 
+        instance = null;
         logger.info("Database manager shutdown complete");
     }
 

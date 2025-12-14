@@ -90,7 +90,7 @@ public class CrawlerTest {
         WebCrawler crawler = new WebCrawler(dbManager);
 
         assertThrows(IllegalArgumentException.class, () -> {
-            crawler.startCrawl("not-a-valid-url", 2);
+            crawler.startCrawl("not-a-valid-url", 2, 100);
         }, "Should throw exception for invalid URL");
     }
 

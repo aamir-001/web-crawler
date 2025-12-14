@@ -30,7 +30,7 @@
 
 ## 🎯 What You Need to Build
 
-### **Phase 4: Search Engine** (2-3 days)
+### **Phase 4: Search Engine**
 **Priority: HIGH - Start Here!**
 
 Create 5 classes in `src/main/java/com/searchengine/search/`:
@@ -45,7 +45,7 @@ Create 5 classes in `src/main/java/com/searchengine/search/`:
 
 ---
 
-### **Phase 5: GUI** (3-4 days)
+### **Phase 5: GUI**
 **Priority: MEDIUM - After Phase 4**
 
 Create JavaFX interface in `src/main/java/com/searchengine/gui/`:
@@ -59,7 +59,7 @@ Create JavaFX interface in `src/main/java/com/searchengine/gui/`:
 
 ---
 
-### **Phase 6: Testing & Polish** (2-3 days)
+### **Phase 6: Testing & Polish**
 **Priority: LOW - Final touches**
 
 - Write unit tests
@@ -269,21 +269,6 @@ Update this section as you complete tasks:
 
 ---
 
-## 🎯 Timeline
-
-**Suggested Schedule:**
-
-| Day | Task |
-|-----|------|
-| Day 1-2 | Phase 4: Query processing & ranking |
-| Day 3 | Phase 4: Snippets & integration |
-| Day 4-5 | Phase 5: GUI layout & crawler panel |
-| Day 6-7 | Phase 5: Search panel & results |
-| Day 8-9 | Phase 6: Testing & bug fixes |
-| Day 10 | Phase 6: Documentation & polish |
-
----
-
 ## 🏁 Final Deliverables
 
 When you're done, the project should have:
@@ -300,14 +285,17 @@ When you're done, the project should have:
 
 ---
 
-## 📄 Document Index
+## 📄 Documentation (7 files)
 
-1. **[NEXT_STEPS.md](NEXT_STEPS.md)** ⭐ **READ THIS FIRST!** - Detailed implementation guide
-2. **[TEAM_HANDOFF.md](TEAM_HANDOFF.md)** - This file - Quick reference
-3. **[README.md](README.md)** - Project overview
-4. **[IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)** - Current status
-5. **[ARCHITECTURE.md](ARCHITECTURE.md)** - System architecture
-6. **[SETUP_GUIDE.md](SETUP_GUIDE.md)** - Setup instructions
+| Document | Purpose |
+|----------|---------|
+| **[NEXT_STEPS.md](NEXT_STEPS.md)** | Implementation guide for Phase 4-6 |
+| **[TEAM_HANDOFF.md](TEAM_HANDOFF.md)** | This file - Quick reference |
+| **[PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md)** | High-level project overview |
+| **[IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)** | Current status of all phases |
+| **[ARCHITECTURE.md](ARCHITECTURE.md)** | System design and architecture |
+| **[SETUP_GUIDE.md](SETUP_GUIDE.md)** | Setup instructions |
+| **[TESTING_GUIDE.md](TESTING_GUIDE.md)** | Testing instructions |
 
 ---
 

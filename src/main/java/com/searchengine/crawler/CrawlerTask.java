@@ -122,6 +122,10 @@ public class CrawlerTask implements Runnable {
                 Thread.sleep(delay);
             }
 
+        } catch (InterruptedException e) {
+            // Thread was interrupted (crawler stopping) - this is expected, not an error
+            Thread.currentThread().interrupt();
+            logger.debug("Crawl interrupted for URL: {}", url);
         } catch (Exception e) {
             logger.error("Error crawling URL: {}", url, e);
             if (listener != null) {
