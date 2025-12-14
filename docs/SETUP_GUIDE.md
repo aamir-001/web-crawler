@@ -93,14 +93,31 @@ This single command will:
 
 ## Step 5: Run the Application
 
+### Quick Test (3 commands):
+```bash
+mvn clean compile                                                    # Build
+mvn test                                                             # Run all 13 tests
+mvn exec:java -Dexec.mainClass="com.searchengine.CrawlerDemo"       # Test crawler
+```
+
+### Available Demo Applications:
+```bash
+# Main entry point (shows available options)
+mvn exec:java -Dexec.mainClass="com.searchengine.Main"
+
+# Test web crawling
+mvn exec:java -Dexec.mainClass="com.searchengine.CrawlerDemo"
+
+# Test indexing
+mvn exec:java -Dexec.mainClass="com.searchengine.IndexerDemo"
+
+# Interactive search
+mvn exec:java -Dexec.mainClass="com.searchengine.SearchDemo"
+```
+
 ### From IDE:
 - Find `src/main/java/com/searchengine/Main.java`
 - Right-click → Run
-
-### From Command Line:
-```bash
-mvn compile exec:java -Dexec.mainClass="com.searchengine.Main"
-```
 
 ## Common Issues
 

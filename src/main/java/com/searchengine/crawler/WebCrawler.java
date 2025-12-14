@@ -29,7 +29,7 @@ public class WebCrawler implements CrawlerTask.CrawlerListener {
 
     private ExecutorService executorService;
     private final int threadPoolSize;
-    private final int maxPages;
+    private int maxPages;
     private final AtomicInteger pagesCrawled;
     private final AtomicBoolean isRunning;
     private CrawlMetadata currentCrawlMetadata;
@@ -52,11 +52,14 @@ public class WebCrawler implements CrawlerTask.CrawlerListener {
     /**
      * Start crawling from a starting URL
      */
-    public void startCrawl(String startUrl, int maxDepth) {
+    public void startCrawl(String startUrl, int maxDepth, int maxPages) {
         if (isRunning.get()) {
             logger.warn("Crawler is already running");
             return;
         }
+
+        // Set max pages from parameter
+        this.maxPages = maxPages;
 
         // Validate and normalize URL
         if (!URLValidator.isValid(startUrl)) {
@@ -70,7 +73,7 @@ public class WebCrawler implements CrawlerTask.CrawlerListener {
             throw new IllegalArgumentException("Failed to normalize URL: " + startUrl);
         }
 
-        logger.info("Starting crawl from: {} with max depth: {}", normalizedUrl, maxDepth);
+        logger.info("Starting crawl from: {} with max depth: {}, max pages: {}", normalizedUrl, maxDepth, maxPages);
 
         // Reset state
         urlQueue.clear();
@@ -119,10 +122,10 @@ public class WebCrawler implements CrawlerTask.CrawlerListener {
         if (executorService != null) {
             executorService.shutdownNow();
             try {
-                executorService.awaitTermination(10, TimeUnit.SECONDS);
+                executorService.awaitTermination(5, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                logger.error("Interrupted while waiting for crawler to stop", e);
+                logger.debug("Interrupted while waiting for crawler to stop");
             }
         }
 

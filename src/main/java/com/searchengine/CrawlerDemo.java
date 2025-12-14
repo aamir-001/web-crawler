@@ -110,11 +110,12 @@ public class CrawlerDemo {
         // String startUrl = "https://books.toscrape.com";
 
         int maxDepth = 2;
+        int maxPages = 50;
 
         System.out.println("\n🔧 Configuration:");
         System.out.println("   Start URL: " + startUrl);
         System.out.println("   Max Depth: " + maxDepth);
-        System.out.println("   Max Pages: 500 (configurable in config.properties)");
+        System.out.println("   Max Pages: " + maxPages);
         System.out.println("   Delay Between Requests: 1000ms");
         System.out.println("   Respect robots.txt: true");
         System.out.println();
@@ -122,7 +123,7 @@ public class CrawlerDemo {
         // Start crawling in a separate thread
         new Thread(() -> {
             try {
-                crawler.startCrawl(startUrl, maxDepth);
+                crawler.startCrawl(startUrl, maxDepth, maxPages);
             } catch (Exception e) {
                 logger.error("Error during crawl", e);
                 dbManager.shutdown();

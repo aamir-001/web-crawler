@@ -8,6 +8,7 @@
   - Automatic schema creation
   - Foreign key support
   - Thread-safe operations
+  - Singleton reset on shutdown (bug fixed Dec 2025)
 
 - **[Page.java](src/main/java/com/searchengine/database/Page.java)** - Data model for crawled pages
 
@@ -176,49 +177,79 @@ crawl_metadata (crawl_id, start_url, max_depth, pages_crawled, start_time, end_t
 
 ---
 
-## 🔄 Phase 4: Search Engine (NOT STARTED)
+## ✅ Phase 4: Search Engine (COMPLETE)
 
-### To Be Implemented:
-- `QueryProcessor.java` - Parse and normalize search queries
-- `RankingAlgorithm.java` - TF-IDF ranking implementation
-- `SnippetGenerator.java` - Generate context snippets
-- `SearchEngine.java` - Main search interface
-- `SearchDAO.java` - Database queries for search
-- `SearchResult.java` - Data model for results
+### Components Implemented:
+- **[SearchResult.java](src/main/java/com/searchengine/search/SearchResult.java)** - Data model for search results
+  - PageId, URL, title, snippet, score, rank
+  - Comparable for sorting by relevance
 
-### Tasks:
-- [ ] Query parsing and normalization
-- [ ] TF-IDF calculation
-- [ ] Result ranking
-- [ ] Snippet generation with keyword highlighting
-- [ ] Multi-word query support
-- [ ] Pagination
+- **[QueryProcessor.java](src/main/java/com/searchengine/search/QueryProcessor.java)** - Query processing
+  - Normalize and tokenize queries
+  - Apply stemming to query terms
+  - Remove stop words
+
+- **[TFIDFCalculator.java](src/main/java/com/searchengine/search/TFIDFCalculator.java)** - TF-IDF ranking
+  - Calculate Term Frequency (TF)
+  - Calculate Inverse Document Frequency (IDF)
+  - Score and rank results
+
+- **[SnippetGenerator.java](src/main/java/com/searchengine/search/SnippetGenerator.java)** - Snippet generation
+  - Extract context around keywords
+  - Highlight matching terms with **bold**
+  - Configurable snippet length
+
+- **[SearchEngine.java](src/main/java/com/searchengine/search/SearchEngine.java)** - Main search interface
+  - Integrates all components
+  - Returns ranked SearchResult list
+  - Pagination support
+
+### Features:
+- ✅ Query parsing and normalization
+- ✅ TF-IDF calculation and ranking
+- ✅ Snippet generation with highlighting
+- ✅ Multi-word query support (AND search)
+- ✅ Pagination support
 
 ---
 
-## 🔄 Phase 5: GUI (NOT STARTED)
+## ✅ Phase 5: GUI (COMPLETE)
 
-### To Be Implemented:
-- `MainWindow.java` - Main JavaFX window
-- `CrawlerPanel.java` - Crawler controls and progress
-- `SearchPanel.java` - Search interface
-- `ResultItem.java` - Custom result display component
-- `ProgressMonitor.java` - Real-time crawl progress
+### Components Implemented:
+- **[MainWindow.java](src/main/java/com/searchengine/gui/MainWindow.java)** - Main JavaFX application
+  - TabPane with Crawler and Search tabs
+  - Menu bar (File/Help)
+  - Status bar
+  - Backend initialization
 
-### Tasks:
-- [ ] Main window layout (TabPane)
-- [ ] Crawler tab:
-  - [ ] URL input field
-  - [ ] Depth selector
-  - [ ] Start/Stop buttons
-  - [ ] Progress bar
-  - [ ] Status log (ListView)
-  - [ ] Real-time statistics
-- [ ] Search tab:
-  - [ ] Search input
-  - [ ] Results list
-  - [ ] Result preview
-  - [ ] Pagination controls
+- **[CrawlerPanel.java](src/main/java/com/searchengine/gui/CrawlerPanel.java)** - Crawler controls
+  - URL input field
+  - Max depth spinner (1-10)
+  - Max pages spinner (10-1000)
+  - Start/Stop buttons
+  - Progress bar with real-time updates
+  - Scrolling log area
+  - Database clear button
+  - Page count statistics
+
+- **[SearchPanel.java](src/main/java/com/searchengine/gui/SearchPanel.java)** - Search interface
+  - Search query input with Enter key support
+  - TF-IDF ranked results ListView
+  - Custom SearchResultCell with clickable hyperlinks
+  - Score display
+  - Snippet preview
+  - Reindex button
+  - Index statistics (pages, unique words)
+
+### Features:
+- ✅ JavaFX 21.0.1 GUI framework
+- ✅ Tabbed interface (Crawler/Search)
+- ✅ Real-time crawl progress updates
+- ✅ Threaded operations (non-blocking UI)
+- ✅ Clickable search result URLs
+- ✅ Status bar updates
+- ✅ Database statistics display
+- ✅ Reindex functionality
 
 ---
 
@@ -281,22 +312,12 @@ webCrawler.startCrawl("https://example.com", 2);
 
 ## Next Steps
 
-1. **Implement Phase 4 (Search):**
-   - Query processing
-   - TF-IDF ranking
-   - Result formatting
-
-2. **Implement Phase 5 (GUI):**
-   - JavaFX main window
-   - Crawler panel with controls
-   - Search panel with results
-   - Wire everything together
-
-3. **Phase 6 (Testing & Polish):**
-   - Comprehensive testing
-   - Error handling
-   - Documentation
-   - Performance tuning
+1. **Phase 6 (Testing & Polish):**
+   - Add more unit tests
+   - Comprehensive error handling
+   - Input validation
+   - Performance optimization
+   - User documentation
 
 ---
 
@@ -304,9 +325,10 @@ webCrawler.startCrawl("https://example.com", 2);
 
 ```
 src/main/java/com/searchengine/
-├── Main.java                          ✅ Application entry point (Phase 5 placeholder)
+├── Main.java                          ✅ Application entry point
 ├── CrawlerDemo.java                   ✅ Crawler demo application
 ├── IndexerDemo.java                   ✅ Indexer demo application
+├── SearchDemo.java                    ✅ Interactive search demo
 ├── crawler/
 │   ├── CrawlerTask.java              ✅ Single page crawl task
 │   ├── RobotsTxtParser.java          ✅ robots.txt handler
@@ -326,16 +348,27 @@ src/main/java/com/searchengine/
 │   ├── Stemmer.java                  ✅ Porter stemmer
 │   ├── StopWordFilter.java           ✅ Stop word removal
 │   └── Tokenizer.java                ✅ Text tokenization
-├── search/                           ⏳ To be implemented (Phase 4)
-├── gui/                              ⏳ To be implemented (Phase 5)
+├── search/                            ✅ Phase 4 complete
+│   ├── QueryProcessor.java           ✅ Query parsing
+│   ├── SearchEngine.java             ✅ Main search API
+│   ├── SearchResult.java             ✅ Result model
+│   ├── SnippetGenerator.java         ✅ Snippet generation
+│   └── TFIDFCalculator.java          ✅ TF-IDF ranking
+├── gui/                              ✅ Phase 5 complete
+│   ├── MainWindow.java               ✅ Main JavaFX window
+│   ├── CrawlerPanel.java             ✅ Crawler controls
+│   └── SearchPanel.java              ✅ Search interface
 └── utils/
     ├── ConfigLoader.java             ✅ Configuration loader
     ├── URLNormalizer.java            ✅ URL normalization
     └── URLValidator.java             ✅ URL validation
 
 src/test/java/com/searchengine/
-├── CrawlerTest.java                  ✅ Crawler unit tests
-└── QuickTest.java                    ✅ Comprehensive unit tests (8/8 passing)
+├── CrawlerTest.java                  ✅ Crawler unit tests (5 tests)
+├── QuickTest.java                    ✅ Comprehensive unit tests (8 tests)
+└── SearchEngineTest.java             ✅ Search engine tests (8 tests)
+
+Total: 21 tests passing
 ```
 
 ---
@@ -349,6 +382,7 @@ src/test/java/com/searchengine/
 - ✅ SLF4J + Logback - Logging
 - ✅ JUnit 5 - Testing
 - ✅ Gson - JSON handling
+- ✅ JavaFX 21.0.1 - GUI framework
 
 ---
 
@@ -358,13 +392,13 @@ src/test/java/com/searchengine/
 - ✅ Phase 1 (Database Layer) - 100%
 - ✅ Phase 2 (Web Crawler) - 100%
 - ✅ Phase 3 (Indexer) - 100%
+- ✅ Phase 4 (Search Engine) - 100%
+- ✅ Phase 5 (GUI) - 100%
 
 **Remaining:**
-- ⏳ Phase 4 (Search Engine) - 0%
-- ⏳ Phase 5 (GUI) - 0%
 - ⏳ Phase 6 (Testing & Polish) - 0%
 
-**Current Status:** You have a fully functional web crawler and indexer! The system can:
+**Current Status:** Full desktop search engine application with GUI! The system can:
 1. Crawl websites with multithreading and depth limiting
 2. Respect robots.txt and apply politeness delays
 3. Save crawled pages to SQLite database
@@ -372,6 +406,7 @@ src/test/java/com/searchengine/
 5. Filter stop words and apply Porter stemming
 6. Build an inverted index with position tracking
 7. Persist the index to database
-8. Perform single-word, AND, and OR searches
+8. Perform TF-IDF ranked searches with snippets
+9. Display results in a JavaFX GUI with clickable links
 
-**Next Step:** Implement Phase 4 (Search Engine) with TF-IDF ranking and result formatting!
+**Next Step:** Phase 6 - Testing and Polish!

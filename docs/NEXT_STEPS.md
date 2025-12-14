@@ -85,8 +85,6 @@ Build a proper search engine with ranking and snippets.
    - Return ranked list of SearchResult objects
    - Support pagination
 
-**Estimated Time:** 2-3 days
-
 ---
 
 ### **Phase 5: GUI** (Priority: MEDIUM)
@@ -136,8 +134,6 @@ Create a JavaFX graphical interface.
    - Snippet with highlighted keywords
    - Relevance score
 
-**Estimated Time:** 3-4 days
-
 ---
 
 ### **Phase 6: Testing & Polish** (Priority: LOW)
@@ -172,8 +168,6 @@ Ensure quality and reliability.
    - Update README with installation instructions
    - Create user manual
    - Document API endpoints (if any)
-
-**Estimated Time:** 2-3 days
 
 ---
 
@@ -389,16 +383,6 @@ If you run into issues:
 2. **Read the JavaDoc** comments in the code
 3. **Run the demo applications** to see how things work
 4. **Check IMPLEMENTATION_STATUS.md** for detailed component info
-
----
-
-## 🎯 Project Timeline
-
-**Week 1:** Phase 4 (Search Engine)
-**Week 2:** Phase 5 (GUI)
-**Week 3:** Phase 6 (Testing & Polish)
-
-**Total Estimated Time:** 7-10 days of development
 
 ---
 
