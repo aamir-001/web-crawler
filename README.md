@@ -5,7 +5,7 @@ A multithreaded web crawler with indexing and search capabilities built in Java.
 ## Team Members
 
 - **Sachin Adlakha**
-- **Mohd. Aamir**
+- **Md Aamir**
 - **Gaurav**
 
 ## University
